@@ -4,7 +4,7 @@ require "json"
 
 module SpectreClient
   class Client
-    def initialize(project_name, suite_name, url_base)
+    def initialize(project_name, suite_name, url_base, sha:nil, screenshot_count: nil)
       @url_base = url_base
       request = RestClient::Request.execute(
         method: :post,
@@ -12,7 +12,9 @@ module SpectreClient
         timeout: 120,
         payload: {
           project: project_name,
-          suite: suite_name
+          suite: suite_name,
+          sha: sha,
+          screenshot_count: screenshot_count
         }
       )
       response = JSON.parse(request.to_str)
